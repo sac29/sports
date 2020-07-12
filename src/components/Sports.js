@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Card, ListGroup, InputGroup, FormControl } from 'react-bootstrap';
-import Navbar from 'react-bootstrap/Navbar';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import styles from './Sports.module.css';
+import {
+    Container,
+    Card,
+    ListGroup,
+    InputGroup,
+    FormControl,
+    Navbar,
+    Row,
+    Col
+} from 'react-bootstrap';
 
 
 export class Sports extends Component {
@@ -31,61 +36,53 @@ export class Sports extends Component {
     }
 
 
-onChange = (event) => {
-    debugger
-    const searchTerm = event.target.value.trim();
-    let filteredSports
-    if (searchTerm) {
-        filteredSports = this.state.sports.filter(sport => sport.name.includes(searchTerm));
-    } else {
-        filteredSports = [...this.state.sports]
+    onChange = (event) => {
+        const searchTerm = event.target.value.trim();
+        let filteredSports;
+        if (searchTerm) {
+            filteredSports = this.state.sports.filter(sport => sport.name.includes(searchTerm));
+        } else {
+            filteredSports = [...this.state.sports]
+        }
+        this.setState({ filteredData: filteredSports });
     }
-    this.setState({ filteredData: filteredSports });
-}
-render() {
-    return (
-        <div>
-            <Container fluid >
-                <Navbar bg="dark">
-                    <Navbar.Brand href="#home">
-                        <img
-                            src="/logo.svg"
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
-                            alt="React Bootstrap logo"
-                        />
-                    </Navbar.Brand>
-                </Navbar>
-                <Row className="justify-content-center">
-                    <Col xs={8}>
-                        <InputGroup className="mb-3">
-                            <FormControl
-                                placeholder="Search your favourite sport"
-                                aria-label="Username"
-                                onChange={this.onChange}
-                                aria-describedby="basic-addon1"
-                            />
-                        </InputGroup>
-                    </Col>
-                </Row>
-                <Row className="pt-10 justify-content-center">
-                    <Col xs={8}>
-                        <Card body>
-                            <ListGroup>
-                                {this.state.filteredData.map(sport =>
 
-                                    <ListGroup.Item key={sport.id}>{sport.name}</ListGroup.Item>
-
-                                )}
-                            </ListGroup>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
-        </div>
-    )
-}
+    render() {
+        return (
+            <div>
+                <Container fluid className="bg-light">
+                    <Navbar bg="dark">
+                        <Navbar.Brand className="text-light">
+                            Sports
+                        </Navbar.Brand>
+                    </Navbar>
+                    <Row className="justify-content-center p-3">
+                        <Col xs={4}>
+                            <InputGroup className="">
+                                <FormControl
+                                    placeholder="Search your favourite sport"
+                                    aria-label="Username"
+                                    onChange={this.onChange}
+                                    aria-describedby="basic-addon1"
+                                />
+                            </InputGroup>
+                        </Col>
+                    </Row>
+                    <Row className="justify-content-center">
+                        <Col xs={8}>
+                            <Card body>
+                                <ListGroup>
+                                    {this.state.filteredData.map(sport =>
+                                        <ListGroup.Item key={sport.id}>{sport.name}</ListGroup.Item>
+                                    )}
+                                </ListGroup>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        )
+    }
 }
 
 export default Sports
